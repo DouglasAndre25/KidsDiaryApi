@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+
 const { Model } = Sequelize;
 
 class teacher extends Model {
@@ -7,6 +8,7 @@ class teacher extends Model {
       {},
       {
         sequelize,
+        tableName: "teacher",
       }
     );
 

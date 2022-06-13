@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+
 const { Model } = Sequelize;
 
 class responsible extends Model {
@@ -7,6 +8,7 @@ class responsible extends Model {
       {},
       {
         sequelize,
+        tableName: "responsible",
       }
     );
 
@@ -14,7 +16,7 @@ class responsible extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.people, { foreignKey: "people_id", as: "people", });
+    this.belongsTo(models.people, { foreignKey: "people_id", as: "people" });
   }
 }
 
