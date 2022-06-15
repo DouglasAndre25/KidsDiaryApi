@@ -1,23 +1,26 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.createTable("teacher", {
+    return queryInterface.createTable("class", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      people_id: {
-        type: Sequelize.INTEGER,
-        reference: { model: "people", key: "id" },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
+      },
+      teacher_id: {
+        type: Sequelize.INTEGER,
+        reference: { model: "teacher", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.dropTable("teacher");
+    return queryInterface.dropTable("class");
   },
 };
