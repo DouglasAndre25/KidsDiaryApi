@@ -17,6 +17,11 @@ class responsible extends Model {
 
   static associate(models) {
     this.belongsTo(models.people, { foreignKey: "people_id", as: "people" });
+
+    this.hasMany(models.student, {
+      foreignKey: "responsible_id",
+      as: "responsible",
+    });
   }
 }
 
