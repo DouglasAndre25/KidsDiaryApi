@@ -97,7 +97,7 @@ const login = async (req, res) => {
 
     delete peopleResponse.password;
     return res.send({
-      response: {
+      data: {
         ...peopleResponse.dataValues,
         role: peopleResponse.responsible ? "responsible" : "teacher",
       },
