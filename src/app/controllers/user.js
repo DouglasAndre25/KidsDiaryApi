@@ -59,8 +59,8 @@ const create = async (req, res) => {
       data: {
         ...peopleResponse.dataValues,
         role: body.role,
+        token,
       },
-      token,
     });
   } catch (error) {
     await transaction.rollback();
@@ -100,10 +100,10 @@ const login = async (req, res) => {
       data: {
         ...peopleResponse.dataValues,
         role: peopleResponse.responsible ? "responsible" : "teacher",
+        token: jwt.sign({ id: peopleResponse.id }, process.env.APP_SECRET, {
+          expiresIn: process.env.APP_SECRET_EXPIRES,
+        }),
       },
-      token: jwt.sign({ id: peopleResponse.id }, process.env.APP_SECRET, {
-        expiresIn: process.env.APP_SECRET_EXPIRES,
-      }),
     });
   } catch (error) {
     return res.status(500).send({ message: error, error: true });
