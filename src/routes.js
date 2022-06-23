@@ -2,6 +2,7 @@ const { Router } = require("express");
 const UserController = require("./app/controllers/user");
 const ResponsibleController = require("./app/controllers/responsible");
 const StudentController = require("./app/controllers/student");
+const ClassController = require("./app/controllers/class");
 
 const authMiddleware = require("./app/middlewares/auth");
 
@@ -15,5 +16,8 @@ routes.use(authMiddleware);
 routes.get("/responsible", ResponsibleController.getAll);
 
 routes.post("/student", StudentController.create);
+routes.get("/student", StudentController.getAll);
+
+routes.post("/class", ClassController.create);
 
 module.exports = routes;
