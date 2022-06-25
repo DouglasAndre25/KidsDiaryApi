@@ -20,5 +20,7 @@ routes.get("/student", StudentController.getAll);
 
 routes.post("/class", ClassController.create);
 routes.get("/class", ClassController.getAll);
+routes.put("/class/:id", ClassController.update);
+routes.delete("/class/:id", ClassController.exclude);
 
 module.exports = routes;

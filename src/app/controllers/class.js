@@ -35,7 +35,6 @@ const create = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
-  console.log(req.userId);
   try {
     const classResponse = await Class.findAll({
       where: { teacher_id: req.userId },
@@ -65,7 +64,60 @@ const getAll = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  const transaction = await connection.transaction();
+  try {
+    const { body, userId, params } = req;
+
+    const currentClass = await Class.findOne({
+      where: {
+        id: params.id,
+      },
+    });
+
+    const classResponse = currentClass.update(
+      {
+        name: body.name,
+        teacher_id: userId,
+      },
+      { transaction }
+    );
+
+    currentClass.setStudents(body.students);
+    await transaction.commit();
+
+    return res.send({
+      data: classResponse,
+    });
+  } catch (error) {
+    await transaction.rollback();
+    return res.status(500).send({ message: error, error: true });
+  }
+};
+
+const exclude = async (req, res) => {
+  try {
+    const { params } = req;
+
+    const classResponse = await (
+      await Class.findOne({
+        where: {
+          id: params.id,
+        },
+      })
+    ).destroy();
+
+    return res.send({
+      data: classResponse,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: error, error: true });
+  }
+};
+
 module.exports = {
   create,
   getAll,
+  update,
+  exclude,
 };
