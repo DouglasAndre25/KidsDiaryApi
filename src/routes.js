@@ -25,5 +25,7 @@ routes.put("/class/:id", ClassController.update);
 routes.delete("/class/:id", ClassController.exclude);
 
 routes.post("/scheme", SchemeController.create);
+routes.get("/scheme/class/:classId", SchemeController.getAllByClass);
+routes.delete("/scheme/:id", SchemeController.exclude);
 
 module.exports = routes;
