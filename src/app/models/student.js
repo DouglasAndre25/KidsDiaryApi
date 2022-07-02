@@ -26,7 +26,7 @@ class student extends Model {
     });
 
     this.belongsToMany(models.Class, { through: "class_student" });
-    this.belongsToMany(models.teacher, { through: models.event });
+    this.hasMany(models.event, { foreignKey: "student_id" });
   }
 }
 

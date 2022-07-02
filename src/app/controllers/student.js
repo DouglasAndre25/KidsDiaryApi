@@ -1,6 +1,8 @@
+const { Op } = require("sequelize");
 const student = require("../models/student");
 const responsible = require("../models/responsible");
 const people = require("../models/people");
+const { connection } = require("../models");
 
 const create = async (req, res) => {
   const { body } = req;
@@ -28,7 +30,15 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const studentResponse = await student.findAll({
+    const [classStudents] = await connection.query(
+      "SELECT * FROM class_student"
+    );
+
+    const registeredStudent = classStudents.map(
+      (classStudent) => classStudent.student_id
+    );
+
+    const queryParams = {
       include: [
         {
           model: responsible,
@@ -42,7 +52,16 @@ const getAll = async (req, res) => {
           ],
         },
       ],
-    });
+    };
+    if (req.query.showDesasociate) {
+      queryParams.where = {
+        id: {
+          [Op.notIn]: registeredStudent,
+        },
+      };
+    }
+
+    const studentResponse = await student.findAll(queryParams);
 
     return res.send({
       data: studentResponse,

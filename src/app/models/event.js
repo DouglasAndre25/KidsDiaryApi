@@ -22,7 +22,15 @@ class event extends Model {
     return this;
   }
 
-  static associate(models) {}
+  static associate(models) {
+    this.belongsTo(models.student, {
+      foreignKey: "student_id",
+    });
+
+    this.belongsTo(models.teacher, {
+      foreignKey: "teacher_id",
+    });
+  }
 }
 
 module.exports = event;

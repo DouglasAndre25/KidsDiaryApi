@@ -19,7 +19,7 @@ class teacher extends Model {
     this.belongsTo(models.people, { foreignKey: "people_id", as: "people" });
 
     this.hasMany(models.Class, { foreignKey: "teacher_id", as: "teacher" });
-    this.belongsToMany(models.student, { through: models.event });
+    this.hasMany(models.event, { foreignKey: "teacher_id" });
   }
 }
 

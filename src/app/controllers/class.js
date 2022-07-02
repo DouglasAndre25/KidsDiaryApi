@@ -115,9 +115,40 @@ const exclude = async (req, res) => {
   }
 };
 
+const getById = async (req, res) => {
+  try {
+    const { params } = req;
+
+    const classResponse = await Class.findOne({
+      where: { id: params.id },
+      include: [
+        {
+          model: teacher,
+          as: "teacher",
+          include: [
+            {
+              model: people,
+              as: "people",
+              attributes: ["id", "name", "email", "birthday", "phone"],
+            },
+          ],
+        },
+        {
+          model: student,
+        },
+      ],
+    });
+
+    return res.send({ data: classResponse });
+  } catch (error) {
+    return res.status(500).send({ message: error, error: true });
+  }
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
   update,
   exclude,
 };
