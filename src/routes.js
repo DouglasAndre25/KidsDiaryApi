@@ -32,5 +32,6 @@ routes.get("/scheme/class/:classId", SchemeController.getAllByClass);
 routes.delete("/scheme/:id", SchemeController.exclude);
 
 routes.post("/event", EventController.create);
+routes.delete("/event/:id", EventController.exclude);
 
 module.exports = routes;

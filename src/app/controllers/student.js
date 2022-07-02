@@ -3,6 +3,8 @@ const student = require("../models/student");
 const responsible = require("../models/responsible");
 const people = require("../models/people");
 const { connection } = require("../models");
+const Class = require("../models/class");
+const event = require("../models/event");
 
 const create = async (req, res) => {
   const { body } = req;
@@ -51,6 +53,12 @@ const getAll = async (req, res) => {
             },
           ],
         },
+        {
+          model: Class,
+        },
+        {
+          model: event,
+        },
       ],
     };
     if (req.query.showDesasociate) {
@@ -58,6 +66,13 @@ const getAll = async (req, res) => {
         id: {
           [Op.notIn]: registeredStudent,
         },
+      };
+    }
+
+    if (req.query.responsibleId) {
+      queryParams.where = {
+        ...queryParams.where,
+        responsible_id: req.query.responsibleId,
       };
     }
 

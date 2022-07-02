@@ -16,6 +16,27 @@ const create = async (req, res) => {
   }
 };
 
+const exclude = async (req, res) => {
+  try {
+    const { params } = req;
+
+    const eventResponse = await (
+      await event.findOne({
+        where: {
+          id: params.id,
+        },
+      })
+    ).destroy();
+
+    return res.send({
+      data: eventResponse,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: error, error: true });
+  }
+};
+
 module.exports = {
   create,
+  exclude,
 };
