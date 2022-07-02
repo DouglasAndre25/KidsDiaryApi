@@ -71,7 +71,28 @@ const getAll = async (req, res) => {
   }
 };
 
+const exclude = async (req, res) => {
+  try {
+    const { params } = req;
+
+    const studentResponse = await (
+      await student.findOne({
+        where: {
+          id: params.id,
+        },
+      })
+    ).destroy();
+
+    return res.send({
+      data: studentResponse,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: error, error: true });
+  }
+};
+
 module.exports = {
   create,
   getAll,
+  exclude,
 };

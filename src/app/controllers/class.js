@@ -3,6 +3,7 @@ const student = require("../models/student");
 const teacher = require("../models/teacher");
 const people = require("../models/people");
 const { connection } = require("../models");
+const event = require("../models/event");
 
 const create = async (req, res) => {
   const transaction = await connection.transaction();
@@ -135,6 +136,9 @@ const getById = async (req, res) => {
         },
         {
           model: student,
+          include: {
+            model: event,
+          },
         },
       ],
     });
