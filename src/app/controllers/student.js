@@ -5,6 +5,7 @@ const people = require("../models/people");
 const { connection } = require("../models");
 const Class = require("../models/class");
 const event = require("../models/event");
+const scheme = require("../models/scheme");
 
 const create = async (req, res) => {
   const { body } = req;
